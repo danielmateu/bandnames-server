@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Socket Server</title>
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+    <link rel="icon" type="image/png" href="favicon.svg" />
 </head>
 <body class="container">
 
@@ -18,14 +18,19 @@
         // Conexión con el socket server
         const socket = io('http://localhost:8080');
 
-        
+        // Escuchar del servidor e imprimir en consola las bandas
+        socket.on('current-bands', (data) => {
+            // console.log('Recibiendo bandas del servidor');
+            console.log(data);
+        });
+
         /// Para emitir
         // socket.emit('mensaje-to-server', { data });
         
         // Para escuchar
-        socket.on('mensaje-from-server', (data) => {
-            // callback a ejecutar
-        });
+        // socket.on('mensaje-from-server', (data) => {
+        //     // callback a ejecutar
+        // });
         
 
     </script>
