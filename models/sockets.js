@@ -21,13 +21,33 @@ class Sockets {
             // Emitir al cliente conectado todas las bandas actuales
             socket.emit('current-bands', this.bandList.getBands());
 
-            // Escuchar evento: mensaje-to-server
-            // socket.on('mensaje-to-server', (data) => {
-            //     console.log(data);
+            // Votar por la banda
+            socket.on('vote-band', (id) => {
+                this.bandList.increaseVotes(id);
+                // Emitir a todos los clientes conectados el cambio en la banda
+                this.io.emit('current-bands', this.bandList.getBands());
+            });
 
-            //     this.io.emit('mensaje-from-server', data);
-            // });
+            // Borrar banda
+            socket.on('delete-band', (id) => {
+                this.bandList.removeBand(id);
+                // Emitir a todos los clientes conectados el cambio en la banda
+                this.io.emit('current-bands', this.bandList.getBands());
+            })
 
+            // Cambiar nombre de la banda
+            socket.on('change-name-band', ({ id, name }) => {
+                this.bandList.changeName(id, name);
+                // Emitir a todos los clientes conectados el cambio en la banda
+                this.io.emit('current-bands', this.bandList.getBands());
+            })
+
+            // Crear nueva banda
+            socket.on('add-band', ({ name }) => {
+                this.bandList.addBand(name);
+                // Emitir a todos los clientes conectados el cambio en la banda
+                this.io.emit('current-bands', this.bandList.getBands());
+            })
 
         });
     }
