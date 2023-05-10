@@ -49,6 +49,14 @@ class Sockets {
                 this.io.emit('current-bands', this.bandList.getBands());
             })
 
+            // Ordenar bandas por orden de votos
+            socket.on('sort-bands', ({ bands }) => {
+                this.bandList.sortBands(bands);
+                // Emitir a todos los clientes conectados el cambio en la banda
+                this.io.emit('current-bands', this.bandList.getBands());
+            });
+
+
         });
     }
 
